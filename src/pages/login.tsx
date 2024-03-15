@@ -12,7 +12,7 @@ import {
     Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Logo from '../assets/logo_bia.png'; // Asegúrate de que la ruta del logo sea correcta
+import Logo from '../assets/logo_bia.png'; 
 
 const GradientDivider = styled('div')({
     height: '4px',
@@ -119,7 +119,7 @@ const LoginPage: React.FC = () => {
                                 <Button
                                     variant="outlined"
                                     sx={{ mt: 3, borderColor: 'primary.dark', color: 'primary.dark' }}
-                                    onClick={() => navigate('/register')} // Ruta a la que quieres redirigir
+                                    onClick={() => navigate('/register')}
                                 >
                                     REGÍSTRESE
                                 </Button>
