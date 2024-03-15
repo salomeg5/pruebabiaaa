@@ -2,7 +2,7 @@
 
 Salomé Gallego A 
 
-## Inicilizar proyecto 
+## Inicializar proyecto 
 
 Script:
 
