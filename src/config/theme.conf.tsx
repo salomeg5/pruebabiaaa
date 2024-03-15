@@ -42,10 +42,11 @@ const theme = createTheme({
                     linear-gradient(to bottom right, rgba(0, 128, 0, 0.7), rgba(0, 102, 204, 0.7)),
                         url(${backgroundImage})
                     `,
-                    backgroundSize: "100% 100%", // Estira la imagen para cubrir todo el espacio
+                    backgroundSize: "cover", // Estira la imagen para cubrir todo el espacio
                     backgroundPosition: "center center", // Centra la imagen
                     backgroundRepeat: "no-repeat", // Evita que la imagen se repita
-                    minHeight: "100vh", // Asegura que el body tenga al menos la altura de la ventana del navegador
+                    minHeight: "100%", 
+                    Height: "100%"// Asegura que el body tenga al menos la altura de la ventana del navegador
                 },
             },
         },
