@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     Box,
     Button,
@@ -27,6 +28,7 @@ type LoginType = {
 
 const LoginPage: React.FC = () => {
     const [loginData, setLoginData] = React.useState<LoginType>({ username: "", password: "" });
+    const navigate = useNavigate();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -114,7 +116,11 @@ const LoginPage: React.FC = () => {
                                 <Typography variant="body2" gutterBottom>
                                     Este es nuestro portal de trámites en línea un sistema fácil de usar, ágil y sencillo para el control general de solicitudes y requerimientos ambientales en el departamento del Meta.
                                 </Typography>
-                                <Button variant="outlined" sx={{ mt: 3, borderColor: 'primary.dark', color: 'primary.dark' }}>
+                                <Button
+                                    variant="outlined"
+                                    sx={{ mt: 3, borderColor: 'primary.dark', color: 'primary.dark' }}
+                                    onClick={() => navigate('/register')} // Ruta a la que quieres redirigir
+                                >
                                     REGÍSTRESE
                                 </Button>
                                 <Typography variant="caption" sx={{ mt: 2, fontStyle: 'italic' }}>
