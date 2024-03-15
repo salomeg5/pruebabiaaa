@@ -22,9 +22,9 @@ import {
     Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { SelectChangeEvent } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import Logo from '../assets/logo_bia.png';
-
+import colombiaData from '../api/colombia.json';
 const GradientDivider = styled('div')(({ theme }) => ({
     height: '4px',
     width: '80%',
@@ -49,6 +49,7 @@ const scrollToStepper = () => {
 };
 
 const RegistroPage: React.FC = () => {
+    const [selectedDepartment, setSelectedDepartment] = useState('');
     const [tipoDePersona, setTipoDePersona] = useState('');
     const [tipoDeDocumento, setTipoDeDocumento] = useState('');
     const [numeroDeDocumento, setNumeroDeDocumento] = useState('');
@@ -62,6 +63,11 @@ const RegistroPage: React.FC = () => {
     const [countryOfBirth, setCountryOfBirth] = useState('');
     const [gender, setGender] = useState('');
     const [maritalStatus, setMaritalStatus] = useState('');
+
+    const handleDepartmentChange = (event: SelectChangeEvent) => {
+        setSelectedDepartment(event.target.value);
+      };
+
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -154,7 +160,7 @@ const RegistroPage: React.FC = () => {
                                     label="Tipo de documento"
                                     onChange={handleTipoDeDocumentoChange}
                                     sx={{
-                                        width: '300px', 
+                                        width: '300px',
                                         height: '50px',
                                     }}
                                 >
@@ -167,8 +173,8 @@ const RegistroPage: React.FC = () => {
                         <Grid item xs={4}>
                             <TextField
                                 sx={{
-                                    width: '300px', 
-                                    height: '50px', 
+                                    width: '300px',
+                                    height: '50px',
                                 }}
                                 label="Número de documento"
                                 value={numeroDeDocumento}
@@ -247,75 +253,79 @@ const RegistroPage: React.FC = () => {
                                                     InputLabelProps={{ shrink: true }}
                                                 />
                                             </Grid>
-                                            {/* País de nacimiento */}
+                                            {/* Ciudad de nacimiento */}
                                             <Grid item xs={12} sm={6}>
                                                 <FormControl fullWidth>
-                                                    <InputLabel id="country-of-birth-label">País de nacimiento</InputLabel>
+                                                    <InputLabel id="country-of-birth-label">Departamento</InputLabel>
                                                     <Select
-                                                        labelId="country-of-birth-label"
-                                                        value={countryOfBirth}
-                                                        label="País de nacimiento"
-                                                        onChange={(e) => setCountryOfBirth(e.target.value)}
+                                                        label="Departamento"
+                                                        value={selectedDepartment}
+                                                        onChange={handleDepartmentChange}
                                                     >
-                                                        {/* Add MenuItems for each country */}
-                                                    </Select>
-                                                </FormControl>
-                                            </Grid>
-                                            {/* Género */}
-                                            <Grid item xs={12} sm={6}>
-                                                <FormControl component="fieldset">
-                                                    <FormLabel component="legend">Género</FormLabel>
-                                                    <RadioGroup
-                                                        row
-                                                        aria-label="gender"
-                                                        name="row-radio-buttons-group"
-                                                        value={gender}
-                                                        onChange={(e) => setGender(e.target.value)}
-                                                    >
-                                                        <FormControlLabel value="female" control={<Radio />} label="Femenino" />
-                                                        <FormControlLabel value="male" control={<Radio />} label="Masculino" />
-                                                        {/* Add more options if necessary */}
-                                                    </RadioGroup>
-                                                </FormControl>
-                                            </Grid>
-                                            {/* Estado civil */}
-                                            <Grid item xs={12} sm={6}>
-                                                <FormControl fullWidth>
-                                                    <InputLabel id="marital-status-label">Estado civil</InputLabel>
-                                                    <Select
-                                                        labelId="marital-status-label"
-                                                        value={maritalStatus}
-                                                        label="Estado civil"
-                                                        onChange={(e) => setMaritalStatus(e.target.value)}
-                                                    >
-                                                        {/* Add MenuItems for each marital status */}
-                                                    </Select>
-                                                </FormControl>
-                                            </Grid>
+                                                        {colombiaData.map((departamento) => (
+                                                            <MenuItem key={departamento.id} value={departamento.id}>
+                                                                {departamento.departamento}
+                                                            </MenuItem>
+                                                        ))}
+                                                    {/* Add MenuItems for each country */}
+                                                </Select>
+                                            </FormControl>
                                         </Grid>
-                                    )}
-                                    {/* Add other step contents */}
-                                    <Box sx={{ mb: 2 }}>
-                                        <div>
-                                            <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
-                                                Atrás
-                                            </Button>
-                                            <Button
-                                                variant="contained"
-                                                onClick={handleNext}
-                                                sx={{ mt: 1, mr: 1 }}
+                                            {/* Género */}
+                                    <Grid item xs={12} sm={6}>
+                                        <FormControl component="fieldset">
+                                            <FormLabel component="legend">Género</FormLabel>
+                                            <RadioGroup
+                                                row
+                                                aria-label="gender"
+                                                name="row-radio-buttons-group"
+                                                value={gender}
+                                                onChange={(e) => setGender(e.target.value)}
                                             >
-                                                {activeStep === steps.length - 1 ? 'Finalizar' : 'Continuar'}
-                                            </Button>
-                                        </div>
-                                    </Box>
-                                </StepContent>
+                                                <FormControlLabel value="female" control={<Radio />} label="Femenino" />
+                                                <FormControlLabel value="male" control={<Radio />} label="Masculino" />
+                                                {/* Add more options if necessary */}
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </Grid>
+                                    {/* Estado civil */}
+                                    <Grid item xs={12} sm={6}>
+                                        <FormControl fullWidth>
+                                            <InputLabel id="marital-status-label">Estado civil</InputLabel>
+                                            <Select
+                                                labelId="marital-status-label"
+                                                value={maritalStatus}
+                                                label="Estado civil"
+                                                onChange={(e) => setMaritalStatus(e.target.value)}
+                                            >
+                                                {/* Add MenuItems for each marital status */}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+                                    )}
+                                {/* Add other step contents */}
+                                <Box sx={{ mb: 2 }}>
+                                    <div>
+                                        <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
+                                            Atrás
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            onClick={handleNext}
+                                            sx={{ mt: 1, mr: 1 }}
+                                        >
+                                            {activeStep === steps.length - 1 ? 'Finalizar' : 'Continuar'}
+                                        </Button>
+                                    </div>
+                                </Box>
+                            </StepContent>
                             </Step>
-                        ))}
-                    </Stepper>
+                ))}
+            </Stepper>
                 )}
-            </Paper>
-        </Container>
+        </Paper>
+        </Container >
     );
 };
 
